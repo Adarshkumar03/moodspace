@@ -10,6 +10,7 @@ import Register from "./routes/Register";
 import ErrorPage from "./routes/error-page";
 import Home from "./components/Home/Home";
 import Mood from "./routes/Mood";
+import ConfirmationPage from "./routes/ConfirmationPage";
 import Journal from "./routes/Journal";
 import AllJournals from "./routes/AllJournals";
 import Books from "./routes/Books";
@@ -43,6 +44,7 @@ const App = () => {
           <Route path="dashboard" element={<Dashboard />}>
             <Route index element={<Home />} />
             <Route path="mood" element={<Mood />} />
+            <Route path="mood/confirm" element={<ConfirmationPage/>}/>
             <Route path="journal" element={<Journal />} />
             <Route path="journal/all" element={<AllJournals/>}/>
             <Route path="journal/:id" element={<JournalDetail />} />

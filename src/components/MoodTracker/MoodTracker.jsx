@@ -1,46 +1,115 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { Card, Text, Grid, Paper, Button, Group, Title } from "@mantine/core";
+import {
+  Container,
+  Radio,
+  Button,
+  Title,
+  Paper,
+  Group,
+  Text,
+  Mark,
+  List,
+} from "@mantine/core";
 import useAuthStore from "../../stores/authStore";
-import classes from "./mood.module.css";
-import good from "../../assets/good.jpg";
-import bad from "../../assets/bad.jpg";
-import veryGood from "../../assets/veryGood.jpg";
-import veryBad from "../../assets/verysad.jpg";
-import neutral from "../../assets/neutral.jpg";
 
-const mockdata = [
-  { title: "Very Bad", img: veryBad, rating: "1" },
-  { title: "Bad", img: bad, rating: "2" },
+const statements = [
   {
-    title: "Neutral",
-    img: neutral,
-    rating: "3",
+    id: 0,
+    statement: " I felt miserable or unhappy.",
   },
-  { title: "Good", img: good, rating: "4" },
   {
-    title: "Very Good",
-    img: veryGood,
-    rating: "5",
+    id: 1,
+    statement: "I didn’t enjoy anything at all.",
+  },
+  {
+    id: 2,
+    statement: "I felt so tired I just sat around and did nothing.",
+  },
+  {
+    id: 3,
+    statement: "I was very restless.",
+  },
+  {
+    id: 4,
+    statement: "I felt I was no good anymore.",
+  },
+  {
+    id: 5,
+    statement: "I cried a lot. ",
+  },
+  {
+    id: 6,
+    statement: "I found it hard to think properly or concentrate.",
+  },
+  {
+    id: 7,
+    statement: "I hated myself.",
+  },
+  {
+    id: 8,
+    statement: "I was a bad person.",
+  },
+  {
+    id: 9,
+    statement: "I felt lonely.",
+  },
+  {
+    id: 10,
+    statement: "I thought nobody really loved me.",
+  },
+  {
+    id: 11,
+    statement: "I thought I could never be as good as other people.",
+  },
+  {
+    id: 12,
+    statement: "I did everything wrong.",
   },
 ];
 
 export default function MoodTracker() {
   const [moodRating, setMoodRating] = useState(null);
+  const [label, setLabel] = useState("");
+  const [answers, setAnswers] = useState(Array(statements.length).fill(0));
   const navigate = useNavigate();
   const token = useAuthStore((store) => store.token);
 
-  const handleClick = async () => {
-    console.log("Rating", moodRating);
-    console.log(token);
+  const handleChange = (quesInd, value) => {
+    setAnswers((prev) => {
+      const newArray = [...prev];
+      newArray[quesInd] = value;
+      return newArray;
+    });
+  };
+
+  const handleSubmit = async () => {
+    const score = answers.reduce((ans, curr) => ans + curr, 0);
     try {
+      if (score >= 0 && score <= 5) {
+        setMoodRating(5);
+        setLabel("Excellent");
+      } else if (score >= 6 && score <= 10) {
+        setMoodRating(4);
+        setLabel("Okay");
+      } else if (score >= 11 && score <= 15) {
+        setMoodRating(3);
+        setLabel("Low");
+      } else if (score >= 16 && score <= 20) {
+        setMoodRating(2);
+        setLabel("At-Risk");
+      } else {
+        setMoodRating(1);
+        setLabel("Critical");
+      }
+
       const response = await fetch("http://localhost:8000/api/mood", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ moodRating }),
+        body: JSON.stringify({ moodRating, score }),
       });
 
       if (!response.ok) {
@@ -48,66 +117,90 @@ export default function MoodTracker() {
       }
       const data = await response.json();
       console.log("Successfull added mood", data.mood);
-      navigate("/dashboard");
+      navigate("/dashboard/mood/confirm", { state: { score, label } });
     } catch (err) {
       console.log(err);
       navigate("/dashboard/mood");
     }
   };
 
-  const items = mockdata.map((item) => (
-    <Grid.Col key={item.title} span={4}>
-      <Paper
-        shadow="md"
-        p="xl"
-        radius="md"
-        className={classes.card}
-        style={{
-          backgroundImage: `url(${item.img})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
+  const items = statements.map((st) => (
+    <Paper key={st.id} p="md" mb="sm" withBorder shadow="md">
+      <Radio.Group
+        key={st.id}
+        name={`statement-${st.id}`}
+        label={st.statement}
+        onChange={(event) => {
+          handleChange(st.id, parseInt(event));
         }}
-        h={200}
+        size="xl"
+        ml="lg"
       >
-        <div>
-          <Text className={classes.category} size="md" c="#f5f5f5">
-            mood
-          </Text>
-          <Title order={2} className={classes.title} mb={30}>
-            {item.title}
-          </Title>
-        </div>
-        <Button
-          variant="white"
-          color="dark"
-          onClick={() => setMoodRating(item.rating)}
-        >
-          Select mood
-        </Button>
-      </Paper>
-    </Grid.Col>
+        <Group mt="xs">
+          <Radio
+            value="0"
+            label="Not true"
+            defaultChecked
+            size="lg"
+            iconColor="dark.8"
+            color="lime.4"
+          />
+          <Radio
+            value="1"
+            label="Sometimes"
+            size="md"
+            iconColor="dark.8"
+            color="lime.4"
+          />
+          <Radio
+            value="2"
+            label="True"
+            size="md"
+            iconColor="dark.8"
+            color="lime.4"
+          />
+        </Group>
+      </Radio.Group>
+    </Paper>
   ));
 
   return (
-    <Card className={classes.card} bg="#F0F7F6" p={20}>
-      <Group justify="space-between">
-        <Title order={1} mb={20}>
-          How are you feeling?
-        </Title>
-      </Group>
-      <Grid grow gutter="xl" mb={20}>
-        {items}
-        <Grid.Col span={12}>
-          <Button
-            onClick={handleClick}
-            fullWidth
-            variant="gradient"
-            gradient={{ from: "#05372C", to: "#70D560", deg: 90 }}
-          >
-            <Title order={4}>Submit</Title>
-          </Button>
-        </Grid.Col>
-      </Grid>
-    </Card>
+    <Container p="lg">
+      <Title mb="lg">Mood Tracker</Title>
+      <Text size="lg" mb="md" fw={700}>
+        This form asks how you&apos;ve been feeling recently.
+      </Text>
+      <Text size="lg" mb="md">
+        For each question, please check (&#x2713;) how you have been feeling or
+        acting.
+      </Text>
+      <List size="lg" withPadding mb="lg">
+        <List.Item>
+          If a statement was not true about you, check{" "}
+          <Mark color="green">NOT TRUE</Mark>.
+        </List.Item>
+        <List.Item>
+          If a statement was only sometimes true, check{" "}
+          <Mark color="green">SOMETIMES</Mark>.
+        </List.Item>
+        <List.Item>
+          If a statement was true about you most of the time, check{" "}
+          <Mark color="green">TRUE</Mark>.
+        </List.Item>
+      </List>
+
+      <Text size="lg"></Text>
+      <Text size="lg"></Text>
+      {items}
+      <Button
+        onClick={handleSubmit}
+        fullWidth
+        variant="gradient"
+        gradient={{ from: "#05372C", to: "#70D560", deg: 90 }}
+        mt="xl"
+      >
+        <Title order={4}>Submit</Title>
+      </Button>
+    </Container>
   );
 }

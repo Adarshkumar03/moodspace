@@ -10,15 +10,14 @@ import {
   Title,
   Paper,
   SimpleGrid,
-  rem,
 } from "@mantine/core";
 
 const moodMapping = {
-  1: { name: "Very Bad", color: "#d52941" },
-  2: { name: "Bad", color: "#504f9d" },
-  3: { name: "Neutral", color: "#e1f296" },
-  4: { name: "Good", color: "#70D560" },
-  5: { name: "Very Good", color: "#05372C" },
+  1: { name: "Critical", color: "#d52941" },
+  2: { name: "At-Risk", color: "#504f9d" },
+  3: { name: "Low", color: "#e1f296" },
+  4: { name: "Okay", color: "#70D560" },
+  5: { name: "Excellent", color: "#05372C" },
 };
 
 export default function Home() {
@@ -51,7 +50,7 @@ export default function Home() {
 
       const sum = ratings.reduce((total, rating) => total + rating, 0);
 
-      const averageRating = sum / ratings.length;
+      const averageRating = sum / data.moods.length;
       setAvg(averageRating);
 
       const formattedData = Object.entries(moodCounts).map(

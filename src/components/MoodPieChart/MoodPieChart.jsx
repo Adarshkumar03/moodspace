@@ -5,7 +5,7 @@ export default function MoodPieChart({ data }) {
   return (
     <div>
       {data ? (
-        <Stack gap="sm" mb={30}>
+        <Stack gap="sm" mb={20}>
           <Title order={3} ta="center">
             Monthly mood data
           </Title>
