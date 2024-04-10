@@ -8,12 +8,12 @@ export default function MoodSparkline({ data }) {
       {data ? (
         <Stack gap="sm">
           <Title order={3} ta="center">
-            Mood trend
+            Mood Score Trend
           </Title>
           <Sparkline
             data={data}
             w={400}
-            h={100}
+            h={90}
             ml={60}
             curveType="natural"
             className={classes.root}

@@ -16,55 +16,55 @@ import useAuthStore from "../../stores/authStore";
 const statements = [
   {
     id: 0,
-    statement: " I felt miserable or unhappy.",
+    statement: " I feet miserable or unhappy.",
   },
   {
     id: 1,
-    statement: "I didn’t enjoy anything at all.",
+    statement: "I don’t enjoy anything at all.",
   },
   {
     id: 2,
-    statement: "I felt so tired I just sat around and did nothing.",
+    statement: "I feel so tired I just sat around and did nothing.",
   },
   {
     id: 3,
-    statement: "I was very restless.",
+    statement: "I am very restless.",
   },
   {
     id: 4,
-    statement: "I felt I was no good anymore.",
+    statement: "I feel I am no good anymore.",
   },
   {
     id: 5,
-    statement: "I cried a lot. ",
+    statement: "I cry a lot. ",
   },
   {
     id: 6,
-    statement: "I found it hard to think properly or concentrate.",
+    statement: "I find it hard to think properly or concentrate.",
   },
   {
     id: 7,
-    statement: "I hated myself.",
+    statement: "I hate myself.",
   },
   {
     id: 8,
-    statement: "I was a bad person.",
+    statement: "I am a bad person.",
   },
   {
     id: 9,
-    statement: "I felt lonely.",
+    statement: "I feel lonely.",
   },
   {
     id: 10,
-    statement: "I thought nobody really loved me.",
+    statement: "I think nobody really loves me.",
   },
   {
     id: 11,
-    statement: "I thought I could never be as good as other people.",
+    statement: "I think I can never be as good as other people.",
   },
   {
     id: 12,
-    statement: "I did everything wrong.",
+    statement: "I do everything wrong.",
   },
 ];
 
@@ -83,26 +83,8 @@ export default function MoodTracker() {
     });
   };
 
-  const handleSubmit = async () => {
-    const score = answers.reduce((ans, curr) => ans + curr, 0);
+  async function handleFetch(score, label) {
     try {
-      if (score >= 0 && score <= 5) {
-        setMoodRating(5);
-        setLabel("Excellent");
-      } else if (score >= 6 && score <= 10) {
-        setMoodRating(4);
-        setLabel("Okay");
-      } else if (score >= 11 && score <= 15) {
-        setMoodRating(3);
-        setLabel("Low");
-      } else if (score >= 16 && score <= 20) {
-        setMoodRating(2);
-        setLabel("At-Risk");
-      } else {
-        setMoodRating(1);
-        setLabel("Critical");
-      }
-
       const response = await fetch("http://localhost:8000/api/mood", {
         method: "POST",
         headers: {
@@ -122,6 +104,27 @@ export default function MoodTracker() {
       console.log(err);
       navigate("/dashboard/mood");
     }
+  }
+
+  const handleSubmit = async () => {
+    const score = answers.reduce((ans, curr) => ans + curr, 0);
+    if (score >= 0 && score <= 5) {
+      setMoodRating(5);
+      setLabel("Excellent");
+    } else if (score >= 6 && score <= 10) {
+      setMoodRating(4);
+      setLabel("Okay");
+    } else if (score >= 11 && score <= 15) {
+      setMoodRating(3);
+      setLabel("Low");
+    } else if (score >= 16 && score <= 20) {
+      setMoodRating(2);
+      setLabel("At-Risk");
+    } else {
+      setMoodRating(1);
+      setLabel("Critical");
+    }
+    handleFetch(score, label);
   };
 
   const items = statements.map((st) => (
@@ -148,14 +151,14 @@ export default function MoodTracker() {
           <Radio
             value="1"
             label="Sometimes"
-            size="md"
+            size="lg"
             iconColor="dark.8"
             color="lime.4"
           />
           <Radio
             value="2"
             label="True"
-            size="md"
+            size="lg"
             iconColor="dark.8"
             color="lime.4"
           />

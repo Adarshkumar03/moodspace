@@ -7,7 +7,7 @@ export default function MoodPieChart({ data }) {
       {data ? (
         <Stack gap="sm" mb={20}>
           <Title order={3} ta="center">
-            Monthly mood data
+            Monthly Mood Data
           </Title>
           <DonutChart
             data={data}
