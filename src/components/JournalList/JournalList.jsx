@@ -21,7 +21,7 @@ export default function JournalList() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "/v1/journal/limit",
+          `${import.meta.env.VITE_API_FETCH}/v1/journal/limit`,
           {
             method: "GET",
             headers: {

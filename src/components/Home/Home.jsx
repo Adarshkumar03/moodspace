@@ -23,7 +23,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        "/v1/mood/monthly/2024",
+        `${import.meta.env.VITE_API_FETCH}/v1/mood/monthly/2024`,
         {
           method: "GET",
           headers: {
