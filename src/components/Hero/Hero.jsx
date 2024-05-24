@@ -49,8 +49,9 @@ export default function HeroComponent() {
                 }
               >
                 <List.Item>
-                  <b>Mood Tracker</b> – Intuitive mood tracker with customizable
-                  options.
+                  <b>Mood Tracker</b> – Track your emotional patterns over time
+                  using a research-backed tool. Get personalized feedback to
+                  support your mental health.
                 </List.Item>
                 <List.Item>
                   <b>Journalling Editor</b> – Secure journaling space with

@@ -23,7 +23,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        "http://localhost:8000/api/mood/monthly/2024",
+        "/api/mood/monthly/2024",
         {
           method: "GET",
           headers: {

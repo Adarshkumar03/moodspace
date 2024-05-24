@@ -21,7 +21,7 @@ export default function JournalList() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8000/api/journal/limit",
+          "/api/journal/limit",
           {
             method: "GET",
             headers: {

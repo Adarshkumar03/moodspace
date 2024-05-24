@@ -9,7 +9,7 @@ export default function AllJournals() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/journal/", {
+        const response = await fetch("/api/journal/", {
           method: "GET",
           headers: {
             "Content-type": "application/json",
