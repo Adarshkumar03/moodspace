@@ -7,9 +7,6 @@ export default defineConfig({
       "/v1": "https://moodspace-server.vercel.app/",
     },
   },
-  define: {
-    __APP_ENV__: process.env.VITE_API_FETCH,
-  },
   css: {
     postcss: {
       plugins: [],

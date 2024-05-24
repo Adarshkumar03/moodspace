@@ -18,7 +18,7 @@ export default function JournalDetail() {
   console.log(id);
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${import.meta.env.VITE_API_FETCH}/v1/journal/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_VERCEL_FETCH}/v1/journal/${id}`, {
         method: "GET",
         headers: {
           "Content-type": "application/json",

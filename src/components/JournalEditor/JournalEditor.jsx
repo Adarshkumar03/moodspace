@@ -35,7 +35,7 @@ function JournalEditor() {
   const onSubmit = async () => {
     console.log("Journal: " + content);
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_FETCH}/v1/journal`, {
+      const response = await fetch(`${import.meta.env.VITE_VERCEL_FETCH}/v1/journal`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",
