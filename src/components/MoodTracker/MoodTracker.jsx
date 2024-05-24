@@ -85,7 +85,7 @@ export default function MoodTracker() {
 
   async function handleFetch(score, label) {
     try {
-      const response = await fetch("/api/mood", {
+      const response = await fetch("/v1/mood", {
         method: "POST",
         headers: {
           "Content-type": "application/json",

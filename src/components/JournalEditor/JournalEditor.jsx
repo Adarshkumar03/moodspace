@@ -35,7 +35,7 @@ function JournalEditor() {
   const onSubmit = async () => {
     console.log("Journal: " + content);
     try {
-      const response = await fetch("/api/journal", {
+      const response = await fetch("/v1/journal", {
         method: "POST",
         headers: {
           "Content-type": "application/json",

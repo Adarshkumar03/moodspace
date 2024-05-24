@@ -18,7 +18,7 @@ export default function JournalDetail() {
   console.log(id);
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`/api/journal/${id}`, {
+      const response = await fetch(`/v1/journal/${id}`, {
         method: "GET",
         headers: {
           "Content-type": "application/json",
