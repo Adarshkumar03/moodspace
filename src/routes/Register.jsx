@@ -31,7 +31,6 @@ const Register = () => {
       }
       const data = await response.json();
       login(data.token);
-      console.log(data.token);
       setName(data.username);
       setUEmail(data.email);
       navigate("/dashboard");
