@@ -1,8 +1,0 @@
-{
-  "redirects": [
-    {
-      "source": "/v1/:path*",
-      "destination": "https://moodspace-server.vercel.app/v1/:path*"
-    }
-  ]
-}

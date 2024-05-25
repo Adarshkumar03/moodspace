@@ -13,11 +13,12 @@ const Login = () => {
   const login = useAuthStore((state) => state.login);
   const setName = useAuthStore((state) => state.setName);
   const setUEmail = useAuthStore((state) => state.setUEmail);
+  const apiUrl = useAuthStore((state) => state.apiUrl);
 
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${import.meta.env.VITE_VERCEL_FETCH}/v1/user/login/`, {
+      const response = await fetch(`${apiUrl}/v1/user/login/`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -27,7 +28,6 @@ const Login = () => {
         throw new Error(errorData.message || "Login failed");
       }
       const data = await response.json();
-      console.log(data);
       login(data.token);
       setName(data.username);
       setUEmail(data.email);

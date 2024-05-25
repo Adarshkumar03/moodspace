@@ -14,11 +14,12 @@ export default function JournalDetail() {
   const [entry, setEntry] = useState(null);
   const [title, setTitle] = useState(null);
   const token = useAuthStore((store) => store.token);
+  const apiUrl = useAuthStore((store) => store.apiUrl);
   const { id } = useParams();
   console.log(id);
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${import.meta.env.VITE_VERCEL_FETCH}/v1/journal/${id}`, {
+      const response = await fetch(`${apiUrl}/v1/journal/${id}`, {
         method: "GET",
         headers: {
           "Content-type": "application/json",

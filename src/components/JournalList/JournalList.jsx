@@ -17,11 +17,12 @@ export default function JournalList() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const token = useAuthStore((store) => store.token);
+  const apiUrl = useAuthStore((store) => store.apiUrl);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_API_FETCH}/v1/journal/limit`,
+          `${apiUrl}/v1/journal/limit`,
           {
             method: "GET",
             headers: {

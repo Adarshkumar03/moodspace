@@ -17,6 +17,7 @@ function JournalEditor() {
   );
   const [title, setTitle] = useState("Why are you feeling this way?");
   const token = useAuthStore((store) => store.token);
+  const apiUrl = useAuthStore((store) => store.apiUrl);
   const navigate = useNavigate();
   const editor = useEditor({
     extensions: [
@@ -35,7 +36,7 @@ function JournalEditor() {
   const onSubmit = async () => {
     console.log("Journal: " + content);
     try {
-      const response = await fetch(`${import.meta.env.VITE_VERCEL_FETCH}/v1/journal`, {
+      const response = await fetch(`${apiUrl}/v1/journal`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",

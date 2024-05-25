@@ -74,6 +74,7 @@ export default function MoodTracker() {
   const [answers, setAnswers] = useState(Array(statements.length).fill(0));
   const navigate = useNavigate();
   const token = useAuthStore((store) => store.token);
+  const apiUrl = useAuthStore((store) => store.apiUrl);
 
   const handleChange = (quesInd, value) => {
     setAnswers((prev) => {
@@ -85,7 +86,7 @@ export default function MoodTracker() {
 
   async function handleFetch(score, label) {
     try {
-      const response = await fetch(`${import.meta.env.VITE_VERCEL_FETCH}/v1/mood`, {
+      const response = await fetch(`${apiUrl}/v1/mood`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",

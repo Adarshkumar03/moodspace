@@ -15,6 +15,7 @@ const moodMapping = {
 
 export default function Home() {
   const token = useAuthStore((store) => store.token);
+  const apiUrl = useAuthStore((store) => store.apiUrl);
   const [sparlineData, setSparklineData] = useState(null);
   const [monthlyMoodData, setMonthlyMoodData] = useState(null);
   const [avg, setAvg] = useState(0);
@@ -23,7 +24,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        `${import.meta.env.VITE_API_FETCH}/v1/mood/monthly/2024`,
+        `${apiUrl}/v1/mood/monthly/2024`,
         {
           method: "GET",
           headers: {
@@ -44,7 +45,7 @@ export default function Home() {
 
       const sum = ratings.reduce((total, rating) => total + rating, 0);
 
-      const averageRating = sum / data.moods.length;
+      const averageRating = data.moods.length <= 0?0:sum / data.moods.length;
       setAvg(averageRating);
 
       const formattedData = Object.entries(moodCounts).map(
@@ -57,7 +58,7 @@ export default function Home() {
 
       const maxEntry = formattedData.reduce(
         (max, entry) => (entry.value > max.value ? entry : max),
-        { value: -Infinity } // Initial value with a very low 'value'
+        { value: 0 } // Initial value with a very low 'value'
       );
       setMaxMood(maxEntry);
       setMonthlyMoodData(formattedData);

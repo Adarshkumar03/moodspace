@@ -15,11 +15,12 @@ const Register = () => {
   const login = useAuthStore((state) => state.login);
   const setName = useAuthStore((state) => state.setName);
   const setUEmail = useAuthStore((state)=>state.setUEmail);
+  const apiUrl = useAuthStore((state)=>state.apiUrl);
 
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${import.meta.env.VITE_VERCEL_FETCH}/v1/user/register/`, {
+      const response = await fetch(`${apiUrl}/v1/user/register/`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({ username, password}),
