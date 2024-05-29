@@ -8,10 +8,15 @@ import {
   Grid,
   Image,
   Container,
+  Alert,
+  Notification,
+  rem,
 } from "@mantine/core";
 import { Link } from "react-router-dom";
 import classes from "./Form.module.css";
 import { useViewportSize } from "@mantine/hooks";
+import { useState } from "react";
+import { IconX, IconCheck } from "@tabler/icons-react";
 
 export default function Form({
   type,
@@ -26,6 +31,17 @@ export default function Form({
 }) {
   const { height, width } = useViewportSize();
   const newH = height * 0.926;
+  const [error, setError] = useState(null);
+  const xIcon = <IconX style={{ width: rem(20), height: rem(20) }} />;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await onSubmit(e);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
   return (
     <Container fluid p={0} h={height * 0.95}>
       <Grid>
@@ -77,7 +93,7 @@ export default function Form({
                   fullWidth
                   mt="xl"
                   size="md"
-                  onClick={onSubmit}
+                  onClick={handleSubmit}
                   variant="gradient"
                   gradient={{ from: "#05372C", to: "#70D560", deg: 90 }}
                 >
@@ -88,7 +104,7 @@ export default function Form({
                   fullWidth
                   mt="xl"
                   size="md"
-                  onClick={onSubmit}
+                  onClick={handleSubmit}
                   variant="gradient"
                   gradient={{ from: "#05372C", to: "#70D560", deg: 90 }}
                 >
@@ -105,6 +121,11 @@ export default function Form({
                 <Text ta="center" mt="md">
                   Already have an account? <Link to="/login">Login</Link>
                 </Text>
+              )}
+              {error && (
+                <Notification icon={xIcon} color="red" title="Error!" withCloseButton={false} mt="md" bg="#F6F7F8">
+                  {error}
+                </Notification>
               )}
             </Paper>
           </div>

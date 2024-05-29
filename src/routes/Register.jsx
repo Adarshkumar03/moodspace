@@ -14,16 +14,40 @@ const Register = () => {
 
   const login = useAuthStore((state) => state.login);
   const setName = useAuthStore((state) => state.setName);
-  const setUEmail = useAuthStore((state)=>state.setUEmail);
-  const apiUrl = useAuthStore((state)=>state.apiUrl);
+  const setUEmail = useAuthStore((state) => state.setUEmail);
+  const apiUrl = useAuthStore((state) => state.apiUrl);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const usernameRegex = /^[a-zA-Z0-9_-]+$/;
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    if (username.trim() === "") {
+      throw new Error("Username field is empty");
+    } else if (password.trim() === "") {
+      throw new Error("Password field is empty");
+    }
+
+    if (!usernameRegex.test(username)) {
+      throw new Error(
+        "Username can only contain letters, numbers, underscores, and hyphens."
+      );
+    }
+    if (email.trim() !== "" && !emailRegex.test(email)) {
+      throw new Error("Please enter a valid email address.");
+    }
+    if (!passwordRegex.test(password)) {
+      throw new Error(
+        "Password must be at least 8 characters and include uppercase, lowercase, numbers, and special characters."
+      );
+    }
+
     try {
       const response = await fetch(`${apiUrl}/v1/user/register/`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
-        body: JSON.stringify({ username, password}),
+        body: JSON.stringify({ username, password }),
       });
       if (!response.ok) {
         const errorData = await response.json();
@@ -36,12 +60,12 @@ const Register = () => {
       navigate("/dashboard");
     } catch (e) {
       console.log(e);
-      navigate("/register");
+      throw e;
     }
   };
   return (
     <Container fluid p={0}>
-      <Navbar/>
+      <Navbar />
       <Form
         type="Register"
         onSubmit={onSubmit}

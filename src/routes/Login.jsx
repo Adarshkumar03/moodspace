@@ -34,7 +34,7 @@ const Login = () => {
       navigate("/dashboard");
     } catch (e) {
       console.log(e);
-      navigate("/register");
+      throw(e);
     }
   };
   return (
