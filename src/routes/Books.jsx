@@ -36,7 +36,6 @@ const imgData = [
 ];
 
 export default function Books() {
-  console.log(data.books);
   const books = data.books.map((book, index) => {
     return (
       // Add the return statement

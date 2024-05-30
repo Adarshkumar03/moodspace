@@ -98,8 +98,6 @@ export default function MoodTracker() {
       if (!response.ok) {
         throw new Error("Unable to add Mood");
       }
-      const data = await response.json();
-      console.log("Successfull added mood", data.mood);
       navigate("/dashboard/mood/confirm", { state: { score, label } });
     } catch (err) {
       console.log(err);

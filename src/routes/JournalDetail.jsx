@@ -16,7 +16,6 @@ export default function JournalDetail() {
   const token = useAuthStore((store) => store.token);
   const apiUrl = useAuthStore((store) => store.apiUrl);
   const { id } = useParams();
-  console.log(id);
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`${apiUrl}/v1/journal/${id}`, {

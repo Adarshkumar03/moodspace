@@ -34,7 +34,6 @@ function JournalEditor() {
   });
 
   const onSubmit = async () => {
-    console.log("Journal: " + content);
     try {
       const response = await fetch(`${apiUrl}/v1/journal`, {
         method: "POST",
@@ -51,7 +50,6 @@ function JournalEditor() {
         throw new Error("Unable to add journal");
       }
       const data = await response.json();
-      console.log("Successfully added journal: ", data.journal);
       navigate("/dashboard");
     } catch (err) {
       console.log(err.message || "Unable to add journal");

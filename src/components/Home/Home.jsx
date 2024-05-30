@@ -35,7 +35,6 @@ export default function Home() {
       );
       const data = await response.json();
       const moodCounts = {};
-      console.log(data.moods);
       data.moods.forEach((mood) => {
         moodCounts[mood.rating] = (moodCounts[mood.rating] || 0) + 1;
       });
