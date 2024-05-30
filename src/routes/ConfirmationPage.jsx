@@ -56,17 +56,17 @@ export default function ConfirmationPage() {
               <Text
                 size="xl"
                 c="red"
-                mb="sm"
                 ml="auto"
                 mr="auto"
-                fw={500}
+                mb="xs"
+                fw={700}
                 tt="capitalize"
               >
                 You might need urgent help. Please see these resources:
               </Text>
-              <Grid justify="space-around" mb="sm">
-                <Grid.Col span={4}>
-                  <Button>
+              <Grid justify="center" mb="sm">
+                <Grid.Col span={4} mr={60}>
+                  <Button bg="#504F9D" ho>
                     <Link
                       component="a"
                       to="/dashboard/resources/organizations"
@@ -77,7 +77,7 @@ export default function ConfirmationPage() {
                   </Button>
                 </Grid.Col>
                 <Grid.Col span={4}>
-                  <Button>
+                  <Button bg="#504F9D">
                     <Link
                       component="a"
                       to="/dashboard/resources/helpline"

@@ -95,7 +95,7 @@ export default function Home() {
           <Grid.Col span={6}>
             <Paper withBorder radius="md" bg="#504F9D" p={20}>
               <Title order={1} c="white">
-                {maxMood.value} times
+                {maxMood.value} {`${maxMood.value==1?"time":"times"}`}
               </Title>
               <Text size="sm" fw={500} c="#DCD6F7">
                 you had a <Text fw={700} c="white" span inherit>{maxMood.name}</Text> mood

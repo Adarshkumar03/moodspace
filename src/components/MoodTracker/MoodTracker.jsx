@@ -69,8 +69,6 @@ const statements = [
 ];
 
 export default function MoodTracker() {
-  const [moodRating, setMoodRating] = useState(null);
-  const [label, setLabel] = useState("");
   const [answers, setAnswers] = useState(Array(statements.length).fill(0));
   const navigate = useNavigate();
   const token = useAuthStore((store) => store.token);
@@ -84,7 +82,7 @@ export default function MoodTracker() {
     });
   };
 
-  async function handleFetch(score, label) {
+  async function handleFetch(score, label, moodRating) {
     try {
       const response = await fetch(`${apiUrl}/v1/mood`, {
         method: "POST",
@@ -107,23 +105,25 @@ export default function MoodTracker() {
 
   const handleSubmit = async () => {
     const score = answers.reduce((ans, curr) => ans + curr, 0);
+    let moodRating = 0;
+    let label = "";
     if (score >= 0 && score <= 5) {
-      setMoodRating(5);
-      setLabel("Excellent");
+      moodRating = 5;
+      label = "Excellent";
     } else if (score >= 6 && score <= 10) {
-      setMoodRating(4);
-      setLabel("Okay");
+      moodRating = 4;
+      label="Okay";
     } else if (score >= 11 && score <= 15) {
-      setMoodRating(3);
-      setLabel("Low");
+      moodRating = 3;
+      label="Low";
     } else if (score >= 16 && score <= 20) {
-      setMoodRating(2);
-      setLabel("At-Risk");
+      moodRating = 2;
+      label="At-Risk";
     } else {
-      setMoodRating(1);
-      setLabel("Critical");
+      moodRating = 1;
+      label = "Critical";
     }
-    handleFetch(score, label);
+    handleFetch(score, label, moodRating);
   };
 
   const items = statements.map((st) => (

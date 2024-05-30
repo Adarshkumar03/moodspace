@@ -50,10 +50,9 @@ export default function JournalList() {
     <Container fluid>
       <Grid>
         {isLoading ? (
-          // Display Skeleton Loaders while loading
           [1, 2, 3].map(
             (
-              index // Render 3 skeleton cards
+              index
             ) => (
               <Grid.Col span={4} key={`skeleton-${index}`}>
                 <Card shadow="sm" p="lg">
@@ -65,12 +64,12 @@ export default function JournalList() {
               </Grid.Col>
             )
           )
-        ) : journals ? (
+        ) : journals&&journals?.length ? (
           journals.map((journal) => (
             <Grid.Col key={journal._doc._id} p={10}>
               {" "}
               {/* Adjust column span as needed */}
-              <Card p="lg" style={{ border: "1px dotted #05372C" }}>
+              <Card p="md" style={{ border: "1px dotted #05372C" }}>
                 <Title order={4}>
                   {journal._doc.title
                     ? journal._doc.title
@@ -95,7 +94,7 @@ export default function JournalList() {
             </Grid.Col>
           ))
         ) : (
-          <Grid.Col>No Journal data available</Grid.Col>
+          <Grid.Col><Text size="xl">No Journal data available</Text></Grid.Col>
         )}
         {len > 2 ? (
           <Grid.Col>
