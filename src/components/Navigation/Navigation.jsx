@@ -73,7 +73,7 @@ export default function Navigation() {
             </Title>
             {isLoggedIn && (
               <SuprSendInbox
-                workspaceKey={import.meta.env.VITE_WORKSPACE_KEY}
+                workspaceKey={import.meta.env.VITE_SUPRSEND_WORKSPACE_KEY}
                 subscriberId={subscriberId}
                 distinctId={uname}
                 themeType="dark"
