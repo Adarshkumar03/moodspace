@@ -5,7 +5,7 @@ const useAuthStore = create((set) => ({
   token: null,
   uname: null,
   uemail: null,
-  apiUrl: "http://localhost:8000",
+  apiUrl: "https://moodspace-server.vercel.app",
   subscriberId: null,
   setName: (uname) => set({ uname }),
   setUEmail: (uemail) => set({ uemail }),
