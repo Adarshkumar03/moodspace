@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { nprogress, NavigationProgress } from "@mantine/nprogress";
 
@@ -21,10 +21,13 @@ import Helpline from "./routes/Helpline";
 import useAuthStore from "./stores/authStore";
 import JournalDetail from "./routes/JournalDetail";
 import { Container } from "@mantine/core";
+// add to your react component
 
 const App = () => {
   // Login state
   const isLoggedIn = useAuthStore((store) => store.isLoggedIn);
+  const uname = useAuthStore((store) => store.uname);
+  const subscriberId = useAuthStore((store) => store.subscriberId);
   let location = useLocation();
 
   useEffect(() => {
@@ -44,14 +47,14 @@ const App = () => {
           <Route path="dashboard" element={<Dashboard />}>
             <Route index element={<Home />} />
             <Route path="mood" element={<Mood />} />
-            <Route path="mood/confirm" element={<ConfirmationPage/>}/>
+            <Route path="mood/confirm" element={<ConfirmationPage />} />
             <Route path="journal" element={<Journal />} />
-            <Route path="journal/all" element={<AllJournals/>}/>
+            <Route path="journal/all" element={<AllJournals />} />
             <Route path="journal/:id" element={<JournalDetail />} />
             <Route path="resources/books" element={<Books />} />
             <Route path="resources/articles" element={<Articles />} />
             <Route path="resources/organizations" element={<Organizations />} />
-            <Route path="resources/helpline" element={<Helpline/>} />
+            <Route path="resources/helpline" element={<Helpline />} />
             <Route path="*" element={<ErrorPage />} />
           </Route>
         )}

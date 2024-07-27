@@ -16,6 +16,9 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { UserButton } from "../UserButton/UserButton";
 import { useViewportSize } from "@mantine/hooks";
+import useAuthStore from "../../stores/authStore";
+import SuprSendInbox from "@suprsend/react-inbox";
+import "react-toastify/dist/ReactToastify.css";
 
 const data = [
   { icon: IconGauge, label: "Dashboard", link: "" },
@@ -39,6 +42,9 @@ export default function Navigation() {
   const { height, width } = useViewportSize();
   const navigate = useNavigate();
   const [active, setActive] = useState("Billing");
+  const isLoggedIn = useAuthStore((store) => store.isLoggedIn);
+  const subscriberId = useAuthStore((store) => store.subscriberId);
+  const uname = useAuthStore((store) => store.uname);
 
   const links = data.map((item) => (
     <a
@@ -65,6 +71,14 @@ export default function Navigation() {
             <Title order={2} c="#EDF2F4">
               MoodSpace
             </Title>
+            {isLoggedIn && (
+              <SuprSendInbox
+                workspaceKey={import.meta.env.VITE_WORKSPACE_KEY}
+                subscriberId={subscriberId}
+                distinctId={uname}
+                themeType="dark"
+              />
+            )}
           </Group>
           {links}
         </div>

@@ -15,6 +15,7 @@ const Register = () => {
   const login = useAuthStore((state) => state.login);
   const setName = useAuthStore((state) => state.setName);
   const setUEmail = useAuthStore((state) => state.setUEmail);
+  const setSubscriberId = useAuthStore((state) => state.setSubscriberId);
   const apiUrl = useAuthStore((state) => state.apiUrl);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const passwordRegex =
@@ -44,7 +45,7 @@ const Register = () => {
     }
 
     try {
-      const response = await fetch(`${apiUrl}/v1/user/register/`, {
+      const response = await fetch(`${apiUrl}/v1/user/register`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -57,6 +58,8 @@ const Register = () => {
       login(data.token);
       setName(data.username);
       setUEmail(data.email);
+      console.log(data.subscriberId);
+      setSubscriberId(data.subscriberId);
       navigate("/dashboard");
     } catch (e) {
       console.log(e);
