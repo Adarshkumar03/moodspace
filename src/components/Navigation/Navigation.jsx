@@ -76,7 +76,14 @@ export default function Navigation() {
                 workspaceKey={import.meta.env.VITE_SUPRSEND_WORKSPACE_KEY}
                 subscriberId={subscriberId}
                 distinctId={uname}
-                themeType="dark"
+                themeType="light"
+                hideToast
+                theme={{
+                  bell: { color: "white" },
+                  badge: { backgroundColor: "#05372c", color: "white" },
+                  header: { container: { backgroundColor: "#F0F7F6" } },
+                  tabs: { bottomColor: "#05372c" },
+                }}
               />
             )}
           </Group>
