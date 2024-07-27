@@ -77,12 +77,31 @@ export default function Navigation() {
                 subscriberId={subscriberId}
                 distinctId={uname}
                 themeType="light"
-                hideToast
+                hideToast={true}
+                hideAvatar={true}
                 theme={{
+                  notificationsContainer: {
+                    noNotificationsText: { color: "#504F9D" },
+                    noNotificationsSubtext: { color: "black" },
+                  },
                   bell: { color: "white" },
-                  badge: { backgroundColor: "#05372c", color: "white" },
-                  header: { container: { backgroundColor: "#F0F7F6" } },
-                  tabs: { bottomColor: "#05372c" },
+                  badge: { backgroundColor: "#504F9D", color: "white" },
+                  header: {
+                    container: { backgroundColor: "#F0F7F6" },
+                    markAllReadText: { color: "#504F9D" },
+                  },
+                  tabs: { bottomColor: "#D52941" },
+                  notification: {
+                    pinnedIcon: { color: "#D52941" },
+                    actions: [
+                      {
+                        container: {
+                          backgroundColor: "#504F9D",
+                          hoverBackGroundColor: "#623cea",
+                        },
+                      },
+                    ],
+                  },
                 }}
               />
             )}
