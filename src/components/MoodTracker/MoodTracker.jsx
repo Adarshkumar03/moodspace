@@ -70,6 +70,7 @@ const statements = [
 
 export default function MoodTracker() {
   const [answers, setAnswers] = useState(Array(statements.length).fill(0));
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const token = useAuthStore((store) => store.token);
   const apiUrl = useAuthStore((store) => store.apiUrl);
@@ -83,6 +84,7 @@ export default function MoodTracker() {
   };
 
   async function handleFetch(score, label, moodRating) {
+    setLoading(true);
     try {
       const response = await fetch(`${apiUrl}/v1/mood`, {
         method: "POST",
@@ -100,6 +102,8 @@ export default function MoodTracker() {
     } catch (err) {
       console.log(err);
       navigate("/dashboard/mood");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -112,13 +116,13 @@ export default function MoodTracker() {
       label = "Excellent";
     } else if (score >= 6 && score <= 10) {
       moodRating = 4;
-      label="Okay";
+      label = "Okay";
     } else if (score >= 11 && score <= 15) {
       moodRating = 3;
-      label="Low";
+      label = "Low";
     } else if (score >= 16 && score <= 20) {
       moodRating = 2;
-      label="At-Risk";
+      label = "At-Risk";
     } else {
       moodRating = 1;
       label = "Critical";
@@ -200,6 +204,8 @@ export default function MoodTracker() {
         variant="gradient"
         gradient={{ from: "#05372C", to: "#70D560", deg: 90 }}
         mt="xl"
+        loading={loading}
+        disabled={loading}
       >
         <Title order={4}>Submit</Title>
       </Button>

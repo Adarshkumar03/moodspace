@@ -16,6 +16,7 @@ function JournalEditor() {
     "<p>Date: March 9, 2023</p><p>Today, I am grateful for:</p><ul><li>The warm cup of coffee I had this morning that helped me start my day off right.</li><li>The beautiful sunrise I saw on my way to work that reminded me of the beauty in nature.</li><li>The supportive friends and family in my life who are always there for me when I need them.</li><li>The fact that I have a job that allows me to support myself and pursue my passions.</li> <li>The opportunity to take a walk outside during my lunch break and soak up some sunshine and fresh air.</li><p>Writing down these things I am grateful for helps me appreciate the positive aspects of my life and shifts my focus away from negativity. It reminds me that even on the toughest days, there are still things to be grateful for and that there is always something to look forward to tomorrow.</p>"
   );
   const [title, setTitle] = useState("Why are you feeling this way?");
+  const [loading, setLoading] = useState(false);
   const token = useAuthStore((store) => store.token);
   const apiUrl = useAuthStore((store) => store.apiUrl);
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ function JournalEditor() {
   });
 
   const onSubmit = async () => {
+    setLoading(true);
     try {
       const response = await fetch(`${apiUrl}/v1/journal`, {
         method: "POST",
@@ -54,6 +56,8 @@ function JournalEditor() {
     } catch (err) {
       console.log(err.message || "Unable to add journal");
       navigate("/dashboard/journal");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -121,6 +125,8 @@ function JournalEditor() {
         gradient={{ from: "#05372C", to: "#70D560", deg: 90 }}
         fullWidth
         onClick={onSubmit}
+        loading={loading}
+        disabled={loading}
       >
         Save Entry
       </Button>
