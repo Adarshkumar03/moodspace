@@ -8,7 +8,6 @@ import {
   Grid,
   Image,
   Container,
-  Alert,
   Notification,
   rem,
 } from "@mantine/core";
@@ -16,7 +15,7 @@ import { Link } from "react-router-dom";
 import classes from "./Form.module.css";
 import { useViewportSize } from "@mantine/hooks";
 import { useState } from "react";
-import { IconX, IconCheck } from "@tabler/icons-react";
+import { IconX } from "@tabler/icons-react";
 
 export default function Form({
   type,
@@ -60,7 +59,7 @@ export default function Form({
                   : "Welcome to Moodspace, Register"}
               </Title>
               <TextInput
-                label={type === "Login" ? "Username/Email" : "Username"}
+                label={type === "Login" ? "Username" : "Username"}
                 name="username"
                 value={username}
                 placeholder="Ex: Jack-8"
@@ -123,7 +122,14 @@ export default function Form({
                 </Text>
               )}
               {error && (
-                <Notification icon={xIcon} color="red" title="Error!" withCloseButton={false} mt="md" bg="#F6F7F8">
+                <Notification
+                  icon={xIcon}
+                  color="red"
+                  title="Error!"
+                  withCloseButton={false}
+                  mt="md"
+                  bg="#F6F7F8"
+                >
                   {error}
                 </Notification>
               )}
