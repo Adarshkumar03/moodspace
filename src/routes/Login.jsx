@@ -8,6 +8,7 @@ import { Container } from "@mantine/core";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const login = useAuthStore((state) => state.login);
@@ -18,6 +19,7 @@ const Login = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await fetch(`${apiUrl}/v1/user/login`, {
         method: "POST",
@@ -37,6 +39,8 @@ const Login = () => {
     } catch (e) {
       console.log(e);
       throw(e);
+    }finally{
+      setLoading(false);
     }
   };
   return (
@@ -50,6 +54,7 @@ const Login = () => {
         password={password}
         setPassword={setPassword}
         img={loginImg}
+        loading={loading}
       />
     </Container>
   );

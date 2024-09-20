@@ -27,8 +27,9 @@ export default function Form({
   email,
   setEmail,
   img,
+  loading, // Accept loading state as prop
 }) {
-  const { height, width } = useViewportSize();
+  const { height } = useViewportSize();
   const newH = height * 0.926;
   const [error, setError] = useState(null);
   const xIcon = <IconX style={{ width: rem(20), height: rem(20) }} />;
@@ -41,6 +42,7 @@ export default function Form({
       setError(error.message);
     }
   };
+
   return (
     <Container fluid p={0} h={height * 0.95}>
       <Grid>
@@ -59,7 +61,7 @@ export default function Form({
                   : "Welcome to Moodspace, Register"}
               </Title>
               <TextInput
-                label={type === "Login" ? "Username" : "Username"}
+                label="Username"
                 name="username"
                 value={username}
                 placeholder="Ex: Jack-8"
@@ -87,29 +89,18 @@ export default function Form({
                 required
                 onChange={(e) => setPassword(e.target.value)}
               />
-              {type === "Login" ? (
-                <Button
-                  fullWidth
-                  mt="xl"
-                  size="md"
-                  onClick={handleSubmit}
-                  variant="gradient"
-                  gradient={{ from: "#05372C", to: "#70D560", deg: 90 }}
-                >
-                  Login
-                </Button>
-              ) : (
-                <Button
-                  fullWidth
-                  mt="xl"
-                  size="md"
-                  onClick={handleSubmit}
-                  variant="gradient"
-                  gradient={{ from: "#05372C", to: "#70D560", deg: 90 }}
-                >
-                  Register
-                </Button>
-              )}
+              <Button
+                fullWidth
+                mt="xl"
+                size="md"
+                onClick={handleSubmit}
+                loading={loading} // Use loading prop to show spinner
+                variant="gradient"
+                gradient={{ from: "#05372C", to: "#70D560", deg: 90 }}
+                disabled={loading} // Disable the button while loading
+              >
+                {type === "Login" ? "Login" : "Register"}
+              </Button>
 
               {type === "Login" ? (
                 <Text ta="center" mt="md">
@@ -121,6 +112,7 @@ export default function Form({
                   Already have an account? <Link to="/login">Login</Link>
                 </Text>
               )}
+
               {error && (
                 <Notification
                   icon={xIcon}

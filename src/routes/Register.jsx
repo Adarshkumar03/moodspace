@@ -10,6 +10,7 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const login = useAuthStore((state) => state.login);
@@ -24,6 +25,7 @@ const Register = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (username.trim() === "") {
       throw new Error("Username field is empty");
     } else if (password.trim() === "") {
@@ -64,6 +66,8 @@ const Register = () => {
     } catch (e) {
       console.log(e);
       throw e;
+    }finally{
+      setLoading(false);
     }
   };
   return (
@@ -79,6 +83,7 @@ const Register = () => {
         email={email}
         setEmail={setEmail}
         img={registerImg}
+        loading={loading}
       />
     </Container>
   );
