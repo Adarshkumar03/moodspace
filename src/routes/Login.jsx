@@ -23,8 +23,10 @@ const Login = () => {
     date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
     // Check if you're in production to set Secure flag
     const secure = import.meta.env.VITE_MODE === "production" ? "Secure;" : "";
+    const domain = import.meta.env.VITE_MODE === "production" ? "domain=moodspace.vercel.app;" : ""
+    const sameSite = import.meta.env.VITE_MODE === "production" ? "SameSite=None;" : ""
     // Set the cookie with SameSite=None and Secure in production
-    document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/; domain=moodspace.vercel.app; ${secure} SameSite=None`;
+    document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/; ${domain} ${secure} ${sameSite}`;
   };
 
   const onSubmit = async (e) => {
