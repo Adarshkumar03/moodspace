@@ -19,8 +19,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 const data = [
   { icon: IconGauge, label: "Dashboard", link: "" },
-  { icon: IconMoodHappy, label: "Mood", link: "/mood" },
-  { icon: IconNotebook, label: "Journal", link: "/journal" },
+  { icon: IconMoodHappy, label: "Mood Check", link: "/mood" },
+  { icon: IconNotebook, label: "Journal Entry", link: "/journal" },
   { icon: IconBooks, label: "Books", link: "/resources/books" },
   { icon: IconArticle, label: "Articles", link: "/resources/articles" },
   {
