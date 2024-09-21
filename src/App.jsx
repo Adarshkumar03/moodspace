@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { nprogress, NavigationProgress } from "@mantine/nprogress";
 
@@ -21,13 +21,10 @@ import Helpline from "./routes/Helpline";
 import useAuthStore from "./stores/authStore";
 import JournalDetail from "./routes/JournalDetail";
 import { Container } from "@mantine/core";
-// add to your react component
 
 const App = () => {
   // Login state
   const isLoggedIn = useAuthStore((store) => store.isLoggedIn);
-  const uname = useAuthStore((store) => store.uname);
-  const subscriberId = useAuthStore((store) => store.subscriberId);
   let location = useLocation();
 
   useEffect(() => {

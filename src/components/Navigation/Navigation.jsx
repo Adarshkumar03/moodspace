@@ -42,9 +42,6 @@ export default function Navigation() {
   const { height, width } = useViewportSize();
   const navigate = useNavigate();
   const [active, setActive] = useState("Billing");
-  const isLoggedIn = useAuthStore((store) => store.isLoggedIn);
-  const subscriberId = useAuthStore((store) => store.subscriberId);
-  const uname = useAuthStore((store) => store.uname);
 
   const links = data.map((item) => (
     <a
@@ -71,40 +68,6 @@ export default function Navigation() {
             <Title order={2} c="#EDF2F4">
               MoodSpace
             </Title>
-            {isLoggedIn && (
-              <SuprSendInbox
-                workspaceKey={import.meta.env.VITE_SUPRSEND_WORKSPACE_KEY}
-                subscriberId={subscriberId}
-                distinctId={uname}
-                themeType="light"
-                hideToast={true}
-                hideAvatar={true}
-                theme={{
-                  notificationsContainer: {
-                    noNotificationsText: { color: "#504F9D" },
-                    noNotificationsSubtext: { color: "black" },
-                  },
-                  bell: { color: "white" },
-                  badge: { backgroundColor: "#504F9D", color: "white" },
-                  header: {
-                    container: { backgroundColor: "#F0F7F6" },
-                    markAllReadText: { color: "#504F9D" },
-                  },
-                  tabs: { bottomColor: "#D52941" },
-                  notification: {
-                    pinnedIcon: { color: "#D52941" },
-                    actions: [
-                      {
-                        container: {
-                          backgroundColor: "#504F9D",
-                          hoverBackGroundColor: "#623cea",
-                        },
-                      },
-                    ],
-                  },
-                }}
-              />
-            )}
           </Group>
           {links}
         </div>
