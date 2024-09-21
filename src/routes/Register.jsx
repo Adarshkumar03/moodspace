@@ -13,10 +13,15 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const setCookie = (name, value, days) => {
+    const date = new Date();
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/`;
+  };
+
   const login = useAuthStore((state) => state.login);
   const setName = useAuthStore((state) => state.setName);
   const setUEmail = useAuthStore((state) => state.setUEmail);
-  const setSubscriberId = useAuthStore((state) => state.setSubscriberId);
   const apiUrl = useAuthStore((state) => state.apiUrl);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const passwordRegex =
@@ -58,15 +63,16 @@ const Register = () => {
       }
       const data = await response.json();
       login(data.token);
+      setCookie("token", data.token, 7);
+      setCookie("uname", data.username, 7);
+      setCookie("uemail", data.email, 7);
       setName(data.username);
       setUEmail(data.email);
-      console.log(data.subscriberId);
-      setSubscriberId(data.subscriberId);
       navigate("/dashboard");
     } catch (e) {
       console.log(e);
       throw e;
-    }finally{
+    } finally {
       setLoading(false);
     }
   };

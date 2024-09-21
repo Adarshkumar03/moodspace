@@ -1,4 +1,4 @@
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { nprogress, NavigationProgress } from "@mantine/nprogress";
 
@@ -25,7 +25,29 @@ import { Container } from "@mantine/core";
 const App = () => {
   // Login state
   const isLoggedIn = useAuthStore((store) => store.isLoggedIn);
+  const login = useAuthStore((state) => state.login);
+  const setName = useAuthStore((state) => state.setName);
+  const setUEmail = useAuthStore((state) => state.setUEmail);
   let location = useLocation();
+
+  // Helper function to get cookie by name
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+  };
+
+  useEffect(() => {
+    const token = getCookie("token");
+    const uname = getCookie("uname");
+    const uemail = getCookie("uemail");
+
+    if (token && uname && uemail) {
+      login(token); // Set token and isLoggedIn
+      setName(uname); // Set username in Zustand
+      setUEmail(uemail); // Set email in Zustand
+    }
+  }, [login, setName, setUEmail]);
 
   useEffect(() => {
     nprogress.start();

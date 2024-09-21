@@ -17,10 +17,6 @@ export function UserButton() {
           <Title order={5} c="#EDF2F4">
             {uname}
           </Title>
-
-          <Text c="dimmed" size="xs">
-            {uemail}
-          </Text>
         </div>
       </Group>
     </UnstyledButton>

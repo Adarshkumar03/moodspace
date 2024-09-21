@@ -5,6 +5,7 @@ import useAuthStore from "../stores/authStore";
 import loginImg from "../assets/loginImg.jpg";
 import Navbar from "../components/Navbar/Navbar";
 import { Container } from "@mantine/core";
+
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -15,6 +16,13 @@ const Login = () => {
   const setName = useAuthStore((state) => state.setName);
   const setUEmail = useAuthStore((state) => state.setUEmail);
   const apiUrl = useAuthStore((state) => state.apiUrl);
+
+  // Helper function to set cookies
+  const setCookie = (name, value, days) => {
+    const date = new Date();
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/`;
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -30,17 +38,25 @@ const Login = () => {
         throw new Error(errorData.message || "Login failed");
       }
       const data = await response.json();
+      
       login(data.token);
+      setCookie("token", data.token, 7);
+      setCookie("uname", data.username, 7);
+      setCookie("uemail", data.email, 7);
+
+      // Set state values in Zustand
       setName(data.username);
       setUEmail(data.email);
+
+      // Redirect to dashboard
       navigate("/dashboard");
     } catch (e) {
-      console.log(e);
-      throw(e);
-    }finally{
+      console.error(e);
+    } finally {
       setLoading(false);
     }
   };
+
   return (
     <Container fluid p={0}>
       <Navbar />
