@@ -21,7 +21,8 @@ const Login = () => {
   const setCookie = (name, value, days) => {
     const date = new Date();
     date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-    document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/`;
+    const secure = import.meta.env.MODE === 'production' ? 'Secure;' : ''; // Set Secure in production
+    document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/; ${secure} SameSite=Strict`;
   };
 
   const onSubmit = async (e) => {
@@ -38,7 +39,7 @@ const Login = () => {
         throw new Error(errorData.message || "Login failed");
       }
       const data = await response.json();
-      
+
       login(data.token);
       setCookie("token", data.token, 7);
       setCookie("uname", data.username, 7);
