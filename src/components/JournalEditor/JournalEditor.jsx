@@ -51,7 +51,6 @@ function JournalEditor() {
       if (!response.ok) {
         throw new Error("Unable to add journal");
       }
-      const data = await response.json();
       navigate("/dashboard");
     } catch (err) {
       console.log(err.message || "Unable to add journal");

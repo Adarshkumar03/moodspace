@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { Group, Code, Affix, Title, Center } from "@mantine/core";
+import { Group, Affix, Title } from "@mantine/core";
 import {
   IconGauge,
   IconMoodHappy,
   IconNotebook,
   IconBooks,
   IconArticle,
-  IconApps,
   IconBrandDenodo,
   IconLogout,
   IconPhoneCall,
@@ -16,8 +15,6 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { UserButton } from "../UserButton/UserButton";
 import { useViewportSize } from "@mantine/hooks";
-import useAuthStore from "../../stores/authStore";
-import SuprSendInbox from "@suprsend/react-inbox";
 import "react-toastify/dist/ReactToastify.css";
 
 const data = [
@@ -39,7 +36,7 @@ const data = [
 ];
 
 export default function Navigation() {
-  const { height, width } = useViewportSize();
+  const { height } = useViewportSize();
   const navigate = useNavigate();
   const [active, setActive] = useState("Billing");
 
@@ -64,8 +61,8 @@ export default function Navigation() {
     <Affix position={{ top: 0, left: 0 }}>
       <nav className={classes.navbar} style={{ height: `${height}px` }}>
         <div className={classes.navbarMain}>
-          <Group className={classes.header} justify="space-between">
-            <Title order={2} c="#EDF2F4">
+          <Group className={classes.header}>
+            <Title order={1} c="#EDF2F4">
               MoodSpace
             </Title>
           </Group>

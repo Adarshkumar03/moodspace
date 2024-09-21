@@ -70,7 +70,7 @@ export default function Home() {
   // const PRIMARY_COL_HEIGHT = rem(1200);
   // const SECONDARY_COL_HEIGHT = `calc(${PRIMARY_COL_HEIGHT} / 2 - var(--mantine-spacing-md) / 2)`;
   return (
-    <Container my="md" p={15} m={0} fluid bg="#f0f7f6">
+    <Container my="md" p={10} m={0} fluid bg="#f0f7f6">
       <Title mb={30} mt={30}>
         My Dashboard
       </Title>

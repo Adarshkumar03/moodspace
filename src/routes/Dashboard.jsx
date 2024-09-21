@@ -8,10 +8,10 @@ const Dashboard = () => {
   return (
     <Container fluid p={0} h={height}>
       <Grid columns={24}>
-        <Grid.Col span={4} md={3}>
+        <Grid.Col span={4} >
           <Navigation />
         </Grid.Col>
-        <Grid.Col span={20} md={9} h={height}>
+        <Grid.Col span={20} h={height}>
           <Outlet />
         </Grid.Col>
       </Grid>

@@ -120,6 +120,21 @@
       "type": "Crisis Helpline"
     },
     { "name": "iCall", "no": "022-25521111", "type": "Psychological Helpline" },
-    { "name": "Mann Talks", "no": "+91 868 613 9139", "type":"Mental Health Support" }
+    {
+      "name": "Mann Talks",
+      "no": "+91 868 613 9139",
+      "type": "Mental Health Support"
+    },
+    {
+      "name": "Jeevan Aastha Helpline",
+      "no": "18002333330",
+      "type": "Suicide And Stress Helpline"
+    },
+    { "name": "Sumaitri", "no": "011-46018404", "type": "Suicide Helpline" },
+    {
+      "name": "Parivartan Counselling",
+      "no": "7676602602",
+      "type": "Counselling Helpline"
+    }
   ]
 }

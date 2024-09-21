@@ -14,7 +14,6 @@ const Login = () => {
   const login = useAuthStore((state) => state.login);
   const setName = useAuthStore((state) => state.setName);
   const setUEmail = useAuthStore((state) => state.setUEmail);
-  const setSubscriberId = useAuthStore((state) => state.setSubscriberId);
   const apiUrl = useAuthStore((state) => state.apiUrl);
 
   const onSubmit = async (e) => {
@@ -34,7 +33,6 @@ const Login = () => {
       login(data.token);
       setName(data.username);
       setUEmail(data.email);
-      setSubscriberId(data.subscriberId);
       navigate("/dashboard");
     } catch (e) {
       console.log(e);
