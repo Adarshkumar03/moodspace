@@ -1,31 +1,42 @@
 import { create } from "zustand";
+import { useCookies } from "react-cookie";
 
-const useAuthStore = create((set) => ({
-  isLoggedIn: false,
-  token: null,
-  uname: null,
-  uemail: null,
-  apiUrl: "https://moodspace-server.vercel.app",
+const useAuthStore = create((set) => {
+  const [cookies, setCookie, removeCookie] = useCookies(["token", "uname", "uemail"]);
 
-  // Set username in Zustand state
-  setName: (uname) => set({ uname }),
+  return {
+    isLoggedIn: false,
+    token: null,
+    uname: null,
+    uemail: null,
+    apiUrl: "https://moodspace-server.vercel.app",
 
-  // Set email in Zustand state
-  setUEmail: (uemail) => set({ uemail }),
+    // Set username in Zustand state
+    setName: (uname) => set({ uname }),
 
-  // Login function - sets token and login state in Zustand and cookies
-  login: (token) => {
-    set({ token, isLoggedIn: true });
-    document.cookie = `token=${token}; path=/;`; // Set cookie for token
-  },
+    // Set email in Zustand state
+    setUEmail: (uemail) => set({ uemail }),
 
-  // Logout function - clears token and login state, and removes cookies
-  logout: () => {
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    document.cookie = "uname=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    document.cookie = "uemail=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    set({ token: null, uname: null, uemail: null, isLoggedIn: false });
-  },
-}));
+    // Login function - sets token and login state in Zustand and cookies
+    login: (token, uname, uemail) => {
+      set({ token, uname, uemail, isLoggedIn: true });
+      
+      // Use react-cookie to set cookies
+      setCookie("token", token, { path: "/", secure: true, sameSite: "strict" });
+      setCookie("uname", uname, { path: "/", secure: true, sameSite: "strict" });
+      setCookie("uemail", uemail, { path: "/", secure: true, sameSite: "strict" });
+    },
+
+    // Logout function - clears token and login state, and removes cookies
+    logout: () => {
+      // Use react-cookie to remove cookies
+      removeCookie("token", { path: "/" });
+      removeCookie("uname", { path: "/" });
+      removeCookie("uemail", { path: "/" });
+      
+      set({ token: null, uname: null, uemail: null, isLoggedIn: false });
+    },
+  };
+});
 
 export default useAuthStore;

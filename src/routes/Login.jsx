@@ -1,4 +1,5 @@
 import Form from "../components/Form/Form";
+import { useCookies } from "react-cookie";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import useAuthStore from "../stores/authStore";
@@ -10,6 +11,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [cookies, setCookie] = useCookies(["token", "username", "email"]);
   const navigate = useNavigate();
 
   const login = useAuthStore((state) => state.login);
@@ -18,12 +20,12 @@ const Login = () => {
   const apiUrl = useAuthStore((state) => state.apiUrl);
 
   // Helper function to set cookies
-  const setCookie = (name, value, days) => {
-    const date = new Date();
-    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-    const secure = import.meta.env.MODE === 'production' ? 'Secure;' : ''; // Set Secure in production
-    document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/; ${secure} SameSite=Strict`;
-  };
+  // const setCookie = (name, value, days) => {
+  //   const date = new Date();
+  //   date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+  //   const secure = import.meta.env.MODE === 'production' ? 'Secure;' : ''; // Set Secure in production
+  //   document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/; ${secure} SameSite=Strict`;
+  // };
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -41,9 +43,22 @@ const Login = () => {
       const data = await response.json();
 
       login(data.token);
-      setCookie("token", data.token, 7);
-      setCookie("uname", data.username, 7);
-      setCookie("uemail", data.email, 7);
+      setCookie("token", data.token, {
+        path: "/",
+        secure: true,
+        sameSite: "strict",
+        domain: "https://moodspace.vercel.app/",
+      });
+      setCookie("username", data.username, {
+        path: "/",
+        secure: true,
+        domain: "https://moodspace.vercel.app/",
+      });
+      setCookie("email", data.email, {
+        path: "/",
+        secure: true,
+        domain: "https://moodspace.vercel.app/",
+      });
 
       // Set state values in Zustand
       setName(data.username);
